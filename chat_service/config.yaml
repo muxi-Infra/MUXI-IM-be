@@ -1,1 +1,5 @@
+run:
+  mode: "dev"
+# 运行模式，dev 为开发模式，prod 为生产模式
+
 pgpasword: 123456

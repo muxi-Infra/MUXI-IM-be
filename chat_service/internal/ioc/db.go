@@ -5,6 +5,7 @@ import (
 	"github.com/muxi-Infra/MUXI-IM-be/pkg/logger"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	glogger "gorm.io/gorm/logger"
 )
@@ -37,4 +38,15 @@ type gormLoggerFunc func(msg string, fields ...logger.Field)
 
 func (g gormLoggerFunc) Printf(s string, i ...interface{}) {
 	g(s, logger.Field{Key: "args", Val: i})
+}
+
+func InitDBwithSqlite() *gorm.DB {
+	db, err := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+	if err != nil {
+		panic(err)
+	}
+	if err = dao.InitTables(db); err != nil {
+		panic(err)
+	}
+	return db
 }

@@ -9,9 +9,9 @@ import (
 type ChatRepository interface {
 	CreateChatHistory(chistory model.PrivateChatHistory) error
 
-	GetChatHistories() ([]model.PrivateChatHistory, error)
-	//主动搜索聊天历史记录
-	FindChatHistory() ([]model.PrivateChatHistory, error)
+	GetChatHistories(senderID, receiverID int64, limit, offset int) ([]model.PrivateChatHistory, error)
+	// 主动搜索聊天历史记录
+	FindChatHistory(senderID, receiverID int64, limit, offset int, keyword string) ([]model.PrivateChatHistory, error)
 
 	RevokeChatHistory(id int64) error
 }
@@ -20,7 +20,7 @@ type ChatRepository interface {
 type GroupChatRepository interface {
 	CreateChatHistory(gchistory model.GroupChatHistory) error
 	GetChatHistories() ([]model.GroupChatHistory, error)
-	//主动搜索聊天历史记录
+	// 主动搜索聊天历史记录
 	FindChatHistory() ([]model.GroupChatHistory, error)
 }
 
@@ -32,8 +32,8 @@ type groupRepo struct {
 	dao.GroupChatDao
 }
 
-func NewChatRepository() ChatRepository {
-	return &chatRepo{}
+func NewChatRepository(dao dao.ChatDao) ChatRepository {
+	return &chatRepo{dao}
 }
 
 func NewGroupChatRepository() GroupChatRepository {

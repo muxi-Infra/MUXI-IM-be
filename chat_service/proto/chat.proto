@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package chat;
-option go_package = "github.com/muxi-Infra/MUXI-IM-be/api/proto/chat;chatpb";
+option go_package = "github.com/muxi-Infra/MUXI-IM-be/chat_service/grpc;grpc";
 
 // ... existing code ...
 service ChatService {
@@ -12,7 +12,7 @@ service ChatService {
   // 搜索私聊消息
   rpc SearchPrivateMessages(SearchPrivateMessagesRequest) returns (SearchPrivateMessagesResponse);
   // 撤回消息
-  //rpc RevokePrivateMessage(RevokePrivateMessageRequest) returns (RevokePrivateMessageResponse);
+  rpc RevokePrivateMessage(RevokePrivateMessageRequest) returns (RevokePrivateMessageResponse);
 
   // ... existing code ...
 }

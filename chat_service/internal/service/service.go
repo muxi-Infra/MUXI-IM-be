@@ -6,6 +6,6 @@ type chatService struct {
 	repo repository.ChatRepository
 }
 
-func NewChatService(chatRepo repository.ChatRepository) *chatService {
+func NewChatService(chatRepo repository.ChatRepository) ChatService {
 	return &chatService{chatRepo}
 }

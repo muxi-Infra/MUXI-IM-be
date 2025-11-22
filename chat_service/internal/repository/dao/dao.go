@@ -1,15 +1,14 @@
 package dao
 
 import (
-	"errors"
 	"github.com/muxi-Infra/MUXI-IM-be/chat_service/internal/model"
 	"gorm.io/gorm"
 )
 
 type ChatDao interface {
 	CreateChatHistory(chistory model.PrivateChatHistory) error
-	GetChatHistories() ([]model.PrivateChatHistory, error)
-	FindChatHistory() ([]model.PrivateChatHistory, error)
+	GetChatHistories(senderID, receiverID int64, limit, offset int) ([]model.PrivateChatHistory, error)
+	FindChatHistory(senderID, receiverID int64, limit, offset int, keyword string) ([]model.PrivateChatHistory, error)
 	RevokeChatHistory(id int64) error
 }
 
@@ -36,5 +35,9 @@ func NewGroupChatDao() GroupChatDao {
 }
 
 func InitTables(db *gorm.DB) error {
-	return errors.New("not implemented")
+	err := db.AutoMigrate(
+		&model.MessageContent{},
+		&model.PrivateChatHistory{},
+	)
+	return err
 }
